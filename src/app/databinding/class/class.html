@@ -1,0 +1,8 @@
+<div class="container mt-4">
+    <h2 class="section-title">Class Binding</h2>
+    <div [class.bg-success]="isActive" [class.bg-light]="!isActive"
+      class="p-3 rounded mb-3">
+      Box is {{ isActive ? 'Active' : 'Inactive' }}
+    </div>
+    <button class="btn btn-warning" (click)="toggle()">Toggle Class</button>
+  </div>

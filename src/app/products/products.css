@@ -1,0 +1,53 @@
+/* Modal Overlay: Covers the entire screen with a semi-transparent black */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    padding: 20px;
+  }
+  
+  /* Modal Content Box */
+  .modal-content-box {
+    background-color: #f1f1f1;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(250, 249, 249, 0.3);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Form-like Layout Details */
+  .detail-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #c4c4c5;
+    margin-bottom: 2px;
+  }
+  
+  .detail-value {
+    font-weight: 500;
+    color: #ffffff;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @media (max-width: 576px) {
+    .modal-content-box {
+      margin: 10px;
+    }
+  }

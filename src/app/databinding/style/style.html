@@ -1,0 +1,8 @@
+<div class="container mt-4">
+    <h2 class="section-title">Style Binding</h2>
+    <p [style.fontSize.px]="fontSize" [style.color]="textColor">
+      Dynamic Font Size: {{ fontSize }}px
+    </p>
+    <button class="btn btn-success me-2" (click)="increase()">Increase Font</button>
+    <button class="btn btn-danger" (click)="decrease()">Decrease Font</button>
+  </div>
