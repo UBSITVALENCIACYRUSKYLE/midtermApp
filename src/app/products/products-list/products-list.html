@@ -1,0 +1,33 @@
+<div class="products-container">
+    <h2 class="page-title">Product Catalog</h2>
+    <p class="product-count">Showing {{ products.length }} products</p>
+  
+    <div class="table-wrapper">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track product.id) {
+            <tr>
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>
+                <span class="status-badge status-{{ product.status.toLowerCase().replace(' ', '-') }}">
+                  {{ product.status }}
+                </span>
+              </td>
+              <td>
+                <button class="btn-view" (click)="viewProductDetails(product)">View</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>

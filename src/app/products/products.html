@@ -1,68 +1,80 @@
-<table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Status</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    @for (p of product; track p.id) {
-      <tr class="table-active">
-        <th scope="row">{{p.id}}</th>
-        <td>{{p.name}}</td>
-        <td>{{p.status}}</td>
-        <td>
-            <button class="btn btn-primary btn-sm" (click)="viewProductDetails(p)">View</button>
-        </td>
-      </tr>
-    }
-    </tbody>
-  </table>
+<app-products-list (productSelected)="onProductSelected($event)"></app-products-list>
 
-  @if (showModal && selectedProduct) {
-    <div class="modal-overlay" (click)="showModal = false">
-      <div class="modal-content-box shadow" (click)="$event.stopPropagation()">
-        <div class="card border-0">
-          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center p-3">
-            <h5 class="mb-0">Product Details</h5>
-            <button type="button" class="btn-close btn-close-white" (click)="showModal = false"></button>
-          </div>
-          
-          <div class="card-body p-4">
-            <div class="row">
-              <div class="col-6">
-                <div class="detail-label">Product ID</div>
-                <div class="detail-value">{{ selectedProduct.id }}</div>
-              </div>
-              <div class="col-6">
-                <div class="detail-label">Status</div>
-                <div class="detail-value">{{ selectedProduct.status }}</div>
-              </div>
-              <div class="col-12">
-                <div class="detail-label">Product Name</div>
-                <div class="detail-value text-primary fw-bold">{{ selectedProduct.name }}</div>
-              </div>
-              <div class="col-6">
-                <div class="detail-label">Category</div>
-                <div class="detail-value">{{ selectedProduct.category }}</div>
-              </div>
-              <div class="col-6">
-                <div class="detail-label">Price</div>
-                <div class="detail-value text-success">{{ selectedProduct.price | currency }}</div>
-              </div>
-              <div class="col-12">
-                <div class="detail-label">Description</div>
-                <div class="p-3 bg-light rounded mt-1">{{ selectedProduct.description }}</div>
-              </div>
-            </div>
-            
-            <div class="text-end mt-4">
-              <button class="btn btn-secondary px-4" (click)="showModal = false">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
+<app-product-details
+  [selectedProduct]="selectedProduct"
+  [showModal]="showModal"
+  (modalClosed)="onModalClosed()">
+</app-product-details>
+
+<!-- GET PRODUCT BY ID -->
+<div class="services-container">
+
+  <div class="service-section">
+    <h3>Get Product By ID</h3>
+    <div class="input-row">
+      <input type="number" [(ngModel)]="searchId" placeholder="Enter Product ID" class="input-field" />
+      <button class="btn-action" (click)="searchProduct()">Search</button>
     </div>
-  }
+
+    @if (selectedSearchProduct) {
+      <div class="result-card">
+        <p><strong>ID:</strong> {{ selectedSearchProduct.id }}</p>
+        <p><strong>Name:</strong> {{ selectedSearchProduct.name }}</p>
+        <p><strong>Brand:</strong> {{ selectedSearchProduct.brand }}</p>
+        <p><strong>Category:</strong> {{ selectedSearchProduct.category }}</p>
+        <p><strong>Price:</strong> ₱{{ selectedSearchProduct.price.toFixed(2) }}</p>
+        <p><strong>Stock:</strong> {{ selectedSearchProduct.stock }}</p>
+        <p><strong>Status:</strong> {{ selectedSearchProduct.status }}</p>
+        <p><strong>Rating:</strong> ⭐ {{ selectedSearchProduct.rating }} / 5.0</p>
+      </div>
+    }
+  </div>
+
+  <!-- UPDATE PRODUCT -->
+  <div class="service-section">
+    <h3>Update Product</h3>
+    <p>Search a product by ID above first, then edit and save below.</p>
+
+    @if (selectedSearchProduct) {
+      <div class="update-form">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="selectedSearchProduct.name" class="input-field" />
+
+        <label>Brand</label>
+        <input type="text" [(ngModel)]="selectedSearchProduct.brand" class="input-field" />
+
+        <label>Category</label>
+        <input type="text" [(ngModel)]="selectedSearchProduct.category" class="input-field" />
+
+        <label>Price</label>
+        <input type="number" [(ngModel)]="selectedSearchProduct.price" class="input-field" />
+
+        <label>Stock</label>
+        <input type="number" [(ngModel)]="selectedSearchProduct.stock" class="input-field" />
+
+        <label>Status</label>
+        <input type="text" [(ngModel)]="selectedSearchProduct.status" class="input-field" />
+
+        <label>Rating</label>
+        <input type="number" [(ngModel)]="selectedSearchProduct.rating" class="input-field" />
+
+        <button class="btn-update" (click)="saveUpdate()">Update Product</button>
+      </div>
+    }
+
+    @if (updateMessage) {
+      <p class="update-message">{{ updateMessage }}</p>
+    }
+  </div>
+
+  <!-- SESSION AUTH -->
+  <div class="service-section">
+    <h3>Session Auth</h3>
+    <div class="input-row">
+      <button class="btn-action" (click)="login()">Login</button>
+      <button class="btn-action" (click)="logout()">Logout</button>
+    </div>
+    <p>Logged in: <strong style="color: #00ff88">{{ isAuthenticated() }}</strong></p>
+  </div>
+
+</div>

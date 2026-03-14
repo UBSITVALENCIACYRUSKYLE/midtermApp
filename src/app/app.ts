@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NaviComponent } from './components/navi/navi';
-import { Product } from './products/products';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NaviComponent, Product],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

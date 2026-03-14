@@ -1,0 +1,139 @@
+<div class="services-container">
+    <h2 class="page-title">Product Services</h2>
+  
+    <!-- GET ALL PRODUCTS -->
+    <div class="service-section">
+      <h3>Get All Products</h3>
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of getProducts(); track p.id) {
+            <tr [class.active-row]="selectedProduct?.id === p.id">
+              <td>{{ p.id }}</td>
+              <td>{{ p.name }}</td>
+              <td>{{ p.category }}</td>
+              <td>₱{{ p.price.toFixed(2) }}</td>
+              <td>{{ p.status }}</td>
+              <td><button class="btn-view" (click)="viewProduct(p)">View</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+  
+      <!-- PRODUCT DETAIL FORM BELOW TABLE -->
+      @if (selectedProduct) {
+        <div class="detail-panel">
+          <div class="detail-panel-header">
+            <h4>📋 Product Details — {{ selectedProduct.name }}</h4>
+            <button class="btn-dismiss" (click)="selectedProduct = null">✕</button>
+          </div>
+          <div class="detail-grid">
+            <div class="detail-card">
+              <span class="detail-label">Product ID</span>
+              <span class="detail-value">{{ selectedProduct.id }}</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Name</span>
+              <span class="detail-value">{{ selectedProduct.name }}</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Brand</span>
+              <span class="detail-value">{{ selectedProduct.brand }}</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Category</span>
+              <span class="detail-value">{{ selectedProduct.category }}</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Price</span>
+              <span class="detail-value price-value">₱{{ selectedProduct.price.toFixed(2) }}</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Stock</span>
+              <span class="detail-value">{{ selectedProduct.stock }} units</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Status</span>
+              <span class="detail-value">{{ selectedProduct.status }}</span>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Rating</span>
+              <span class="detail-value">⭐ {{ selectedProduct.rating }} / 5.0</span>
+            </div>
+            <div class="detail-card detail-full">
+              <span class="detail-label">Description</span>
+              <span class="detail-value">{{ selectedProduct.description }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  
+    <!-- GET PRODUCT BY ID -->
+    <div class="service-section">
+      <h3>Get Product By ID</h3>
+      <div class="input-row">
+        <input type="number" [(ngModel)]="searchId" placeholder="Enter Product ID" class="input-field" />
+        <button class="btn-action" (click)="searchProduct()">Search</button>
+      </div>
+      @if (searchResult) {
+        <div class="result-card">
+          <p><strong>ID:</strong> {{ searchResult.id }}</p>
+          <p><strong>Name:</strong> {{ searchResult.name }}</p>
+          <p><strong>Brand:</strong> {{ searchResult.brand }}</p>
+          <p><strong>Category:</strong> {{ searchResult.category }}</p>
+          <p><strong>Price:</strong> ₱{{ searchResult.price.toFixed(2) }}</p>
+          <p><strong>Stock:</strong> {{ searchResult.stock }}</p>
+          <p><strong>Status:</strong> {{ searchResult.status }}</p>
+          <p><strong>Rating:</strong> ⭐ {{ searchResult.rating }} / 5.0</p>
+        </div>
+      }
+    </div>
+  
+    <!-- UPDATE PRODUCT -->
+    <div class="service-section">
+      <h3>Update Product</h3>
+      <p>Search a product by ID above first, then edit and save below.</p>
+      @if (searchResult) {
+        <div class="update-form">
+          <label>Name</label>
+          <input type="text" [(ngModel)]="searchResult.name" class="input-field" />
+          <label>Brand</label>
+          <input type="text" [(ngModel)]="searchResult.brand" class="input-field" />
+          <label>Category</label>
+          <input type="text" [(ngModel)]="searchResult.category" class="input-field" />
+          <label>Price</label>
+          <input type="number" [(ngModel)]="searchResult.price" class="input-field" />
+          <label>Stock</label>
+          <input type="number" [(ngModel)]="searchResult.stock" class="input-field" />
+          <label>Status</label>
+          <input type="text" [(ngModel)]="searchResult.status" class="input-field" />
+          <label>Rating</label>
+          <input type="number" [(ngModel)]="searchResult.rating" class="input-field" />
+          <button class="btn-update" (click)="saveUpdate()">Update Product</button>
+        </div>
+      }
+      @if (updateMessage) {
+        <p class="update-message">{{ updateMessage }}</p>
+      }
+    </div>
+  
+    <div class="service-section">
+      <h3>Session Auth</h3>
+      <div class="input-row">
+        <button class="btn-action" (click)="login()">Login</button>
+        <button class="btn-action" (click)="logout()">Logout</button>
+      </div>
+      <p>Logged in: <strong style="color: #00ff88">{{ isAuthenticated() }}</strong></p>
+    </div>
+  
+  </div>
