@@ -4,7 +4,7 @@
 
 .products-container {
   min-height: 100vh;
-  background: #0a0a0f;
+  background: #f1f5f9;
   padding: 40px 32px;
   font-family: 'Exo 2', sans-serif;
 }
@@ -13,38 +13,35 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 2.4rem;
   font-weight: 700;
-  color: #fff;
+  color: #1e293b;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   margin-bottom: 4px;
-  background: linear-gradient(90deg, #00f5ff, #bf00ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .product-count {
-  color: #555;
+  color: #64748b;
   font-size: 0.85rem;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 32px;
 }
 
 .table-wrapper {
-  border: 1px solid #1a1a2e;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(0, 245, 255, 0.05);
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .products-table {
   width: 100%;
   border-collapse: collapse;
-  background: #0d0d1a;
 }
 
 .products-table thead {
-  background: linear-gradient(90deg, #0d0d1a, #1a0a2e);
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
 }
 
 .products-table th {
@@ -53,28 +50,28 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #00f5ff;
+  color: #ffffff;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  border-bottom: 1px solid #1a1a2e;
+  letter-spacing: 2px;
 }
 
 .products-table td {
   padding: 14px 20px;
-  color: #ccc;
+  color: #334155;
   font-size: 0.9rem;
-  border-bottom: 1px solid #111120;
+  border-bottom: 1px solid #e2e8f0;
   transition: background 0.2s;
 }
 
 .products-table tbody tr:hover td {
-  background: rgba(0, 245, 255, 0.03);
-  color: #fff;
+  background: #f1f5f9;
 }
 
 .products-table tbody tr:last-child td {
   border-bottom: none;
 }
+
+/* Status badges */
 
 .status-badge {
   padding: 4px 12px;
@@ -85,41 +82,40 @@
   text-transform: uppercase;
 }
 
-.status-available, .status-in-stock {
-  background: rgba(0, 255, 136, 0.1);
-  color: #00ff88;
-  border: 1px solid rgba(0, 255, 136, 0.3);
+.status-available,
+.status-in-stock {
+  background: #dcfce7;
+  color: #15803d;
 }
 
 .status-out-of-stock {
-  background: rgba(255, 50, 50, 0.1);
-  color: #ff5555;
-  border: 1px solid rgba(255, 50, 50, 0.3);
+  background: #fee2e2;
+  color: #b91c1c;
 }
 
-.status-limited, .status-low-stock {
-  background: rgba(255, 170, 0, 0.1);
-  color: #ffaa00;
-  border: 1px solid rgba(255, 170, 0, 0.3);
+.status-limited,
+.status-low-stock {
+  background: #fff7ed;
+  color: #c2410c;
 }
+
+/* View button */
 
 .btn-view {
-  background: transparent;
-  border: 1px solid #00f5ff;
-  color: #00f5ff;
+  background: #2563eb;
+  border: none;
+  color: #ffffff;
   padding: 6px 18px;
   border-radius: 6px;
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-view:hover {
-  background: #00f5ff;
-  color: #0a0a0f;
-  box-shadow: 0 0 16px rgba(0, 245, 255, 0.4);
+  background: #1d4ed8;
 }
