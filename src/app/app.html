@@ -1,13 +1,22 @@
 <nav class="navbar">
-  <span class="nav-brand">Com-Shop Boys</span>
+  <a class="nav-brand" routerLink="/home">
+    <span class="brand-icon">🎮</span>GamingShop PH
+  </a>
   <div class="nav-links">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Product Services</a>
-
-    <div class="dropdown">
-      <a class="dropdown-toggle" routerLink="/product" routerLinkActive="active">Products ▾</a>
-      <div class="dropdown-menu">
-        <a routerLink="/product-list" routerLinkActive="active">Product List</a>
-        <a routerLink="/product-details" routerLinkActive="active">Product Details</a>
+    <a routerLink="/home"      routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+    <a routerLink="/product"   routerLinkActive="active">Products</a>
+    <a routerLink="/suppliers" routerLinkActive="active">Suppliers</a>
+    <div class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Data Binding ▾</span>
+      <div class="nav-dropdown-menu">
+        <a routerLink="/interpolation" routerLinkActive="active">Interpolation</a>
+        <a routerLink="/property"      routerLinkActive="active">Property</a>
+        <a routerLink="/event"         routerLinkActive="active">Event</a>
+        <a routerLink="/two-way"       routerLinkActive="active">Two-Way</a>
+        <div class="dd-divider"></div>
+        <a routerLink="/attribute"     routerLinkActive="active">Attribute</a>
+        <a routerLink="/class"         routerLinkActive="active">Class</a>
+        <a routerLink="/style"         routerLinkActive="active">Style</a>
       </div>
     </div>
   </div>

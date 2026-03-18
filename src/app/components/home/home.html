@@ -1,84 +1,155 @@
-<div class="container py-5">
+<div class="home-wrap">
 
-  <!-- Welcome -->
-  <div class="text-center mb-5">
-    <h1 class="fw-bold">Welcome to My midterm app</h1>
-    <p class="text-muted">A simple Angular app demonstrating the 7 types of Data Binding.</p>
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-badge">Angular Midterm Project</div>
+    <h1 class="hero-title">GamingShop PH</h1>
+    <p class="hero-sub">
+      A full-stack Angular application demonstrating services, routing,<br>
+      data binding, and more.
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/product"   class="btn-primary">View Products</a>
+      <a routerLink="/suppliers" class="btn-outline">View Suppliers</a>
+    </div>
+  </section>
+
+  <!-- ── WHAT WE OFFER ── -->
+  <section class="section">
+    <p class="section-label">What We Offer</p>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-icon">🛒</div>
+        <h3>Product Services</h3>
+        <p>Browse, search, and manage all products. Full CRUD with Angular signals and real-time filtering.</p>
+        <a routerLink="/product" class="card-link">Go to Products →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🏭</div>
+        <h3>Supplier Management</h3>
+        <p>Track supplier details and contact persons. Add, view, edit, and delete supplier records.</p>
+        <a routerLink="/suppliers" class="card-link">Go to Suppliers →</a>
+      </div>
+
+      <div class="card card--accent">
+        <div class="card-icon">⚡</div>
+        <h3>Angular Signals</h3>
+        <p>Reactive state using Angular 21 <code>signal()</code>, <code>inject()</code>, and <code>.update()</code> — no Zone.js needed.</p>
+        <a routerLink="/product" class="card-link">Explore →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔁</div>
+        <h3>Routing & Navigation</h3>
+        <p>SPA routing with active link tracking, hover dropdown, and standalone component architecture.</p>
+        <a routerLink="/home" class="card-link">Explore →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h3>Session Auth</h3>
+        <p>Lightweight sessionStorage-based login and logout state management across the entire app.</p>
+        <a routerLink="/product" class="card-link">See Demo →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Search Service</h3>
+        <p>Live search across products and suppliers by name, category, or brand using signal-based filtering.</p>
+        <a routerLink="/product" class="card-link">Try Search →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── DATA BINDING TYPES ── -->
+  <section class="section section--bindings">
+    <p class="section-label">Data Binding Types</p>
+    <div class="bindings-grid">
+
+      <div class="binding-card">
+        <h4>Interpolation</h4>
+        <p>Display component data in the template using double curly brace syntax.</p>
+        <a routerLink="/interpolation" class="card-link">View →</a>
+      </div>
+
+      <div class="binding-card">
+        <h4>Property Binding</h4>
+        <p>Bind component properties to HTML element attributes using <code>[ ]</code>.</p>
+        <a routerLink="/property" class="card-link">View →</a>
+      </div>
+
+      <div class="binding-card">
+        <h4>Event Binding</h4>
+        <p>Listen to user events like clicks using <code>( )</code> syntax.</p>
+        <a routerLink="/event" class="card-link">View →</a>
+      </div>
+
+      <div class="binding-card">
+        <h4>Two-Way Binding</h4>
+        <p>Sync data between template and component using <code>ngModel</code>.</p>
+        <a routerLink="/two-way" class="card-link">View →</a>
+      </div>
+
+      <div class="binding-card">
+        <h4>Attribute Binding</h4>
+        <p>Bind to HTML attributes without DOM properties using <code>attr.</code></p>
+        <a routerLink="/attribute" class="card-link">View →</a>
+      </div>
+
+      <div class="binding-card">
+        <h4>Class Binding</h4>
+        <p>Dynamically add or remove CSS classes using class binding.</p>
+        <a routerLink="/class" class="card-link">View →</a>
+      </div>
+
+      <div class="binding-card">
+        <h4>Style Binding</h4>
+        <p>Dynamically set inline styles on elements using style binding.</p>
+        <a routerLink="/style" class="card-link">View →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── TECH STACK TICKER ── -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>Angular 21</span><span class="dot">◆</span>
+      <span>TypeScript</span><span class="dot">◆</span>
+      <span>Signals API</span><span class="dot">◆</span>
+      <span>Standalone Components</span><span class="dot">◆</span>
+      <span>Bootstrap 5</span><span class="dot">◆</span>
+      <span>Angular Router</span><span class="dot">◆</span>
+      <span>FormsModule</span><span class="dot">◆</span>
+      <span>Angular 21</span><span class="dot">◆</span>
+      <span>TypeScript</span><span class="dot">◆</span>
+      <span>Signals API</span><span class="dot">◆</span>
+      <span>Standalone Components</span><span class="dot">◆</span>
+      <span>Bootstrap 5</span><span class="dot">◆</span>
+      <span>Angular Router</span><span class="dot">◆</span>
+      <span>FormsModule</span><span class="dot">◆</span>
+    </div>
   </div>
 
-  <!-- Cards -->
-  <div class="row g-4">
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Interpolation</h5>
-          <p class="card-text text-muted">Display component data in the template using double curly braces syntax.</p>
-          <a routerLink="/interpolation" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Property Binding</h5>
-          <p class="card-text text-muted">Bind component properties to HTML element attributes using [ ].</p>
-          <a routerLink="/property" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Event Binding</h5>
-          <p class="card-text text-muted">Listen to user events like clicks using ( ) syntax.</p>
-          <a routerLink="/event" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Two-Way Binding</h5>
-          <p class="card-text text-muted">Sync data between the template and component using ngModel.</p>
-          <a routerLink="/two-way" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Attribute Binding</h5>
-          <p class="card-text text-muted">Bind to HTML attributes that don't have a DOM property using attr.</p>
-          <a routerLink="/attribute" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Class Binding</h5>
-          <p class="card-text text-muted">Dynamically add or remove CSS classes using class binding.</p>
-          <a routerLink="/class" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold">Style Binding</h5>
-          <p class="card-text text-muted">Dynamically set inline styles on elements using style binding.</p>
-          <a routerLink="/style" class="data-bs-theme=dark">View</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-brand">🎮 GamingShop PH</div>
+    <nav class="footer-nav">
+      <a routerLink="/home">Home</a>
+      <a routerLink="/product">Products</a>
+      <a routerLink="/suppliers">Suppliers</a>
+      <a routerLink="/interpolation">Interpolation</a>
+      <a routerLink="/property">Property</a>
+      <a routerLink="/event">Event</a>
+      <a routerLink="/two-way">Two-Way</a>
+      <a routerLink="/attribute">Attribute</a>
+      <a routerLink="/class">Class</a>
+      <a routerLink="/style">Style</a>
+    </nav>
+    <p class="footer-copy">© 2025 GamingShop PH — Midterm Project</p>
+  </footer>
 
 </div>

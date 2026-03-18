@@ -1,15 +1,18 @@
 <div class="products-container">
-  <h2 class="page-title">Product Catalog</h2>
+
+  <div class="page-header">
+    <div>
+      <h2 class="page-title">Product Catalog</h2>
+      <p class="page-sub">Showing {{ displayedProducts().length }} products</p>
+    </div>
+  </div>
 
   <input
     type="text"
     class="search-input"
-    placeholder="Search products..."
+    placeholder="Search by name, category, or brand..."
     (input)="onSearch($event)"
-    style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #e2e8f0; border-radius:8px; font-size:0.9rem;"
   />
-
-  <p class="product-count">Showing {{ displayedProducts().length }} products</p>
 
   <div class="table-wrapper">
     <table class="products-table">
@@ -17,6 +20,8 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -24,21 +29,38 @@
       <tbody>
         @for (product of displayedProducts(); track product.id) {
           <tr>
-            <td>{{ product.id }}</td>
-            <td>{{ product.name }}</td>
+            <td class="cell-id">{{ product.id }}</td>
+            <td class="cell-name">{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td class="cell-price">₱{{ product.price.toFixed(2) }}</td>
             <td>
-              <span class="status-badge status-{{ product.status.toLowerCase().replace(' ', '-') }}">
+              <span class="status-badge"
+                [class.status-in-stock]="product.status === 'In Stock'"
+                [class.status-low-stock]="product.status === 'Low Stock'"
+                [class.status-out-of-stock]="product.status === 'Out of Stock'">
                 {{ product.status }}
               </span>
             </td>
-            <td style="display: flex; gap: 6px;">
-              <button class="btn-view" (click)="viewProductDetails(product)">View</button>
-              <button class="btn-view" style="background:#dc2626; border-color:#dc2626;"
-                (click)="onDelete(product.id)">Delete</button>
+            <td>
+              <div class="action-btns">
+                <button class="btn-view" (click)="viewProductDetails(product)">View</button>
+                <button class="btn-delete" (click)="onDelete(product.id)">Delete</button>
+              </div>
             </td>
           </tr>
+        }
+        @empty {
+          <tr><td colspan="6" class="empty-row">No products found.</td></tr>
         }
       </tbody>
     </table>
   </div>
+
+  <!-- PRODUCT DETAIL MODAL (triggered by View button) -->
+  <app-product-details
+    [selectedProduct]="selectedDetailProduct()"
+    [showModal]="showDetailModal()"
+    (modalClosed)="onDetailClosed()">
+  </app-product-details>
+
 </div>

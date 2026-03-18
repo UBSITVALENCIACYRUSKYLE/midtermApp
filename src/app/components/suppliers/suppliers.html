@@ -1,0 +1,144 @@
+<div class="suppliers-container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Suppliers Management</h1>
+        <p class="page-sub">{{ displayedSuppliers().length }} suppliers registered</p>
+      </div>
+      <button class="btn-add" (click)="showAddForm.set(!showAddForm())">
+        {{ showAddForm() ? '✕ Cancel' : '+ Add Supplier' }}
+      </button>
+    </div>
+  
+    <!-- STATUS -->
+    @if (statusMessage()) {
+      <div class="status-msg">{{ statusMessage() }}</div>
+    }
+  
+    <!-- ADD FORM -->
+    @if (showAddForm()) {
+      <div class="form-panel">
+        <h3 class="form-title">New Supplier</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Supplier Name *</label>
+            <input class="form-input" type="text" placeholder="e.g. TechHub PH"
+              [value]="newName()" (input)="newName.set($any($event).target.value)" />
+          </div>
+          <div class="form-field">
+            <label>Contact Person *</label>
+            <input class="form-input" type="text" placeholder="e.g. Juan Dela Cruz"
+              [value]="newContactPerson()" (input)="newContactPerson.set($any($event).target.value)" />
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input class="form-input" type="email" placeholder="email@example.com"
+              [value]="newEmail()" (input)="newEmail.set($any($event).target.value)" />
+          </div>
+          <div class="form-field">
+            <label>Phone</label>
+            <input class="form-input" type="text" placeholder="+63 912 345 6789"
+              [value]="newPhone()" (input)="newPhone.set($any($event).target.value)" />
+          </div>
+        </div>
+        <button class="btn-save" (click)="addSupplier()">Save Supplier</button>
+      </div>
+    }
+  
+    <!-- EDIT FORM -->
+    @if (editingSupplier()) {
+      <div class="form-panel form-panel--edit">
+        <div class="form-panel-header">
+          <h3 class="form-title">✏️ Edit — {{ editingSupplier()!.name }}</h3>
+          <button class="btn-x" (click)="editingSupplier.set(null)">✕</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Supplier Name</label>
+            <input class="form-input" type="text" [value]="editingSupplier()!.name"
+              (input)="editingSupplier.set({...editingSupplier()!, name: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Contact Person</label>
+            <input class="form-input" type="text" [value]="editingSupplier()!.contactPerson"
+              (input)="editingSupplier.set({...editingSupplier()!, contactPerson: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input class="form-input" type="email" [value]="editingSupplier()!.email || ''"
+              (input)="editingSupplier.set({...editingSupplier()!, email: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Phone</label>
+            <input class="form-input" type="text" [value]="editingSupplier()!.phone || ''"
+              (input)="editingSupplier.set({...editingSupplier()!, phone: $any($event).target.value})" />
+          </div>
+        </div>
+        <button class="btn-save" (click)="saveEdit()">Save Changes</button>
+      </div>
+    }
+  
+    <!-- VIEW DETAIL -->
+    @if (selectedSupplier()) {
+      <div class="detail-panel">
+        <div class="detail-panel-header">
+          <h4>📋 {{ selectedSupplier()!.name }}</h4>
+          <button class="btn-x" (click)="selectedSupplier.set(null)">✕</button>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-item"><span class="dlabel">ID</span><span class="dvalue">{{ selectedSupplier()!.id }}</span></div>
+          <div class="detail-item"><span class="dlabel">Supplier Name</span><span class="dvalue">{{ selectedSupplier()!.name }}</span></div>
+          <div class="detail-item"><span class="dlabel">Contact Person</span><span class="dvalue">{{ selectedSupplier()!.contactPerson }}</span></div>
+          @if (selectedSupplier()!.email) {
+            <div class="detail-item"><span class="dlabel">Email</span><span class="dvalue">{{ selectedSupplier()!.email }}</span></div>
+          }
+          @if (selectedSupplier()!.phone) {
+            <div class="detail-item"><span class="dlabel">Phone</span><span class="dvalue">{{ selectedSupplier()!.phone }}</span></div>
+          }
+        </div>
+      </div>
+    }
+  
+    <!-- SEARCH -->
+    <div class="search-row">
+      <input class="search-input" type="text"
+        placeholder="Search by supplier name or contact person..."
+        (input)="onSearch($event)" />
+    </div>
+  
+    <!-- TABLE — matches screenshot columns exactly -->
+    <div class="table-wrapper">
+      <table class="suppliers-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Supplier Name</th>
+            <th>Contact Person</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of displayedSuppliers(); track s.id) {
+            <tr [class.row-active]="selectedSupplier()?.id === s.id || editingSupplier()?.id === s.id">
+              <td class="cell-id">{{ s.id }}</td>
+              <td class="cell-name">{{ s.name }}</td>
+              <td>{{ s.contactPerson }}</td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-view"   (click)="viewSupplier(s)">View</button>
+                  <button class="btn-edit"   (click)="startEdit(s)">Edit</button>
+                  <button class="btn-delete" (click)="deleteSupplier(s.id)">Delete</button>
+                </div>
+              </td>
+            </tr>
+          }
+          @empty {
+            <tr><td colspan="4" class="empty-row">No suppliers found.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  
+  </div>
+  

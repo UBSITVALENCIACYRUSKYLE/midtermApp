@@ -1,51 +1,61 @@
 <div class="services-container">
   <h2 class="page-title">Product Services</h2>
 
-  <!-- GET ALL + SEARCH -->
+  <!-- ── GET ALL + SEARCH ── -->
   <div class="service-section">
-    <h3>Get All Products</h3>
+    <h3 class="section-title">Get All Products</h3>
     <input
       class="input-field"
-      style="margin-bottom: 16px;"
       type="text"
       placeholder="Search by name, category, or brand..."
       (input)="onSearch($event)"
     />
-    <table class="products-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (p of displayedProducts(); track p.id) {
-          <tr [class.active-row]="selectedProduct()?.id === p.id">
-            <td>{{ p.id }}</td>
-            <td>{{ p.name }}</td>
-            <td>{{ p.category }}</td>
-            <td>₱{{ p.price.toFixed(2) }}</td>
-            <td>{{ p.status }}</td>
-            <td style="display: flex; gap: 6px;">
-              <button class="btn-view" (click)="viewProduct(p)">View</button>
-              <button class="btn-action" (click)="onEdit(p)">Edit</button>
-              <button class="btn-dismiss" (click)="onDelete(p.id)">Delete</button>
-            </td>
+    <div class="table-wrapper">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (p of displayedProducts(); track p.id) {
+            <tr [class.active-row]="selectedProduct()?.id === p.id">
+              <td class="cell-id">{{ p.id }}</td>
+              <td class="cell-name">{{ p.name }}</td>
+              <td>{{ p.category }}</td>
+              <td class="cell-price">₱{{ p.price.toFixed(2) }}</td>
+              <td>
+                <span class="status-badge"
+                  [class.status-in-stock]="p.status === 'In Stock'"
+                  [class.status-low-stock]="p.status === 'Low Stock'"
+                  [class.status-out-of-stock]="p.status === 'Out of Stock'">
+                  {{ p.status }}
+                </span>
+              </td>
+              <td>
+                <div class="action-btns">
+                  <button class="btn-view"   (click)="viewProduct(p)">View</button>
+                  <button class="btn-edit"   (click)="onEdit(p)">Edit</button>
+                  <button class="btn-delete" (click)="onDelete(p.id)">Delete</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
 
     <!-- INLINE VIEW PANEL -->
     @if (selectedProduct()) {
       <div class="detail-panel">
         <div class="detail-panel-header">
           <h4>📋 Product Details — {{ selectedProduct()!.name }}</h4>
-          <button class="btn-dismiss" (click)="selectedProduct.set(null)">✕</button>
+          <button class="btn-x" (click)="selectedProduct.set(null)">✕</button>
         </div>
         <div class="detail-grid">
           <div class="detail-card"><span class="detail-label">Product ID</span><span class="detail-value">{{ selectedProduct()!.id }}</span></div>
@@ -63,76 +73,104 @@
 
     <!-- INLINE EDIT FORM -->
     @if (editingProduct()) {
-      <div class="detail-panel" style="margin-top: 16px;">
+      <div class="detail-panel detail-panel--edit">
         <div class="detail-panel-header">
           <h4>✏️ Edit Product — {{ editingProduct()!.name }}</h4>
-          <button class="btn-dismiss" (click)="editingProduct.set(null)">✕</button>
+          <button class="btn-x" (click)="editingProduct.set(null)">✕</button>
         </div>
-        <div class="update-form">
-          <label>Name</label>
-          <input type="text" [(ngModel)]="editingProduct()!.name" class="input-field"
-            (ngModelChange)="editingProduct.set({...editingProduct()!, name: $event})" />
-          <label>Brand</label>
-          <input type="text" class="input-field" [value]="editingProduct()!.brand"
-            (input)="editingProduct.set({...editingProduct()!, brand: $any($event).target.value})" />
-          <label>Category</label>
-          <input type="text" class="input-field" [value]="editingProduct()!.category"
-            (input)="editingProduct.set({...editingProduct()!, category: $any($event).target.value})" />
-          <label>Price</label>
-          <input type="number" class="input-field" [value]="editingProduct()!.price"
-            (input)="editingProduct.set({...editingProduct()!, price: +$any($event).target.value})" />
-          <label>Stock</label>
-          <input type="number" class="input-field" [value]="editingProduct()!.stock"
-            (input)="editingProduct.set({...editingProduct()!, stock: +$any($event).target.value})" />
-          <label>Status</label>
-          <input type="text" class="input-field" [value]="editingProduct()!.status"
-            (input)="editingProduct.set({...editingProduct()!, status: $any($event).target.value})" />
-          <label>Rating</label>
-          <input type="number" class="input-field" [value]="editingProduct()!.rating"
-            (input)="editingProduct.set({...editingProduct()!, rating: +$any($event).target.value})" />
-          <button class="btn-update" (click)="saveUpdate()">Save Changes</button>
+        <div class="edit-grid">
+          <div class="form-field">
+            <label>Name</label>
+            <input type="text" class="input-field" [value]="editingProduct()!.name"
+              (input)="editingProduct.set({...editingProduct()!, name: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Brand</label>
+            <input type="text" class="input-field" [value]="editingProduct()!.brand"
+              (input)="editingProduct.set({...editingProduct()!, brand: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Category</label>
+            <input type="text" class="input-field" [value]="editingProduct()!.category"
+              (input)="editingProduct.set({...editingProduct()!, category: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Price</label>
+            <input type="number" class="input-field" [value]="editingProduct()!.price"
+              (input)="editingProduct.set({...editingProduct()!, price: +$any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Stock</label>
+            <input type="number" class="input-field" [value]="editingProduct()!.stock"
+              (input)="editingProduct.set({...editingProduct()!, stock: +$any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Status</label>
+            <input type="text" class="input-field" [value]="editingProduct()!.status"
+              (input)="editingProduct.set({...editingProduct()!, status: $any($event).target.value})" />
+          </div>
+          <div class="form-field">
+            <label>Rating</label>
+            <input type="number" class="input-field" [value]="editingProduct()!.rating"
+              (input)="editingProduct.set({...editingProduct()!, rating: +$any($event).target.value})" />
+          </div>
         </div>
+        <button class="btn-save" (click)="saveUpdate()">Save Changes</button>
       </div>
     }
   </div>
 
-  <!-- GET BY ID -->
+  <!-- ── GET BY ID ── -->
   <div class="service-section">
-    <h3>Get Product By ID</h3>
+    <h3 class="section-title">Get Product By ID</h3>
     <div class="input-row">
-      <input type="number" [value]="searchId()" (input)="searchId.set(+$any($event).target.value)"
-        placeholder="Enter Product ID" class="input-field" />
+      <input type="number" class="input-field"
+        [value]="searchId()"
+        (input)="searchId.set(+$any($event).target.value)"
+        placeholder="Enter Product ID" />
       <button class="btn-action" (click)="searchProduct()">Search</button>
     </div>
     @if (searchResult()) {
       <div class="result-card">
-        <p><strong>ID:</strong> {{ searchResult()!.id }}</p>
-        <p><strong>Name:</strong> {{ searchResult()!.name }}</p>
-        <p><strong>Brand:</strong> {{ searchResult()!.brand }}</p>
-        <p><strong>Category:</strong> {{ searchResult()!.category }}</p>
-        <p><strong>Price:</strong> ₱{{ searchResult()!.price.toFixed(2) }}</p>
-        <p><strong>Stock:</strong> {{ searchResult()!.stock }}</p>
-        <p><strong>Status:</strong> {{ searchResult()!.status }}</p>
-        <p><strong>Rating:</strong> ⭐ {{ searchResult()!.rating }} / 5.0</p>
-        <div style="margin-top: 10px; display: flex; gap: 8px;">
-          <button class="btn-action" (click)="onEdit(searchResult()!)">Edit This Product</button>
-          <button class="btn-dismiss" (click)="onDelete(searchResult()!.id)">Delete This Product</button>
+        <div class="result-grid">
+          <div class="result-item"><span class="detail-label">ID</span><span class="detail-value">{{ searchResult()!.id }}</span></div>
+          <div class="result-item"><span class="detail-label">Name</span><span class="detail-value">{{ searchResult()!.name }}</span></div>
+          <div class="result-item"><span class="detail-label">Brand</span><span class="detail-value">{{ searchResult()!.brand }}</span></div>
+          <div class="result-item"><span class="detail-label">Category</span><span class="detail-value">{{ searchResult()!.category }}</span></div>
+          <div class="result-item"><span class="detail-label">Price</span><span class="detail-value price-value">₱{{ searchResult()!.price.toFixed(2) }}</span></div>
+          <div class="result-item"><span class="detail-label">Stock</span><span class="detail-value">{{ searchResult()!.stock }}</span></div>
+          <div class="result-item"><span class="detail-label">Status</span><span class="detail-value">{{ searchResult()!.status }}</span></div>
+          <div class="result-item"><span class="detail-label">Rating</span><span class="detail-value">⭐ {{ searchResult()!.rating }} / 5.0</span></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn-edit"   (click)="onEdit(searchResult()!)">Edit This Product</button>
+          <button class="btn-delete" (click)="onDelete(searchResult()!.id)">Delete This Product</button>
         </div>
       </div>
     }
   </div>
 
-  @if (updateMessage()) {
-    <p class="update-message" style="padding: 0 24px 16px;">{{ updateMessage() }}</p>
-  }
-
-  <!-- SESSION AUTH -->
+  <!-- ── UPDATE PRODUCT ── -->
   <div class="service-section">
-    <h3>Session Auth</h3>
+    <h3 class="section-title">Update Product</h3>
+    <p class="section-hint">Search a product by ID above first, then click Edit to modify it.</p>
+    @if (updateMessage()) {
+      <div class="status-msg">{{ updateMessage() }}</div>
+    }
+  </div>
+
+  <!-- ── SESSION AUTH ── -->
+  <div class="service-section">
+    <h3 class="section-title">Session Auth</h3>
     <div class="input-row">
       <button class="btn-action" (click)="login()">Login</button>
-      <button class="btn-action" (click)="logout()">Logout</button>
+      <button class="btn-dismiss" (click)="logout()">Logout</button>
     </div>
-    <p>Logged in: <strong style="color: #00ff88">{{ isAuthenticated() }}</strong></p>
+    <p class="auth-status">
+      Logged in: <strong [class.auth-true]="isAuthenticated()" [class.auth-false]="!isAuthenticated()">
+        {{ isAuthenticated() }}
+      </strong>
+    </p>
   </div>
+
 </div>

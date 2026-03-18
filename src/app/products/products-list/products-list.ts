@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../models/product.interface';
 import { ProductService } from '../../services/product';
+import { ProductDetailsComponent } from '../product-details/product-details';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProductDetailsComponent],
   templateUrl: './products-list.html',
   styleUrls: ['./products-list.css']
 })
@@ -16,7 +17,9 @@ export class ProductsListComponent implements OnInit {
 
   @Output() productSelected = new EventEmitter<Product>();
 
-  displayedProducts = signal<Product[]>([]);
+  displayedProducts      = signal<Product[]>([]);
+  selectedDetailProduct  = signal<Product | null>(null);
+  showDetailModal        = signal(false);
 
   ngOnInit(): void {
     this.displayedProducts.set(this.productService.getProducts());
@@ -30,7 +33,14 @@ export class ProductsListComponent implements OnInit {
   }
 
   viewProductDetails(product: Product): void {
+    this.selectedDetailProduct.set({ ...product });
+    this.showDetailModal.set(true);
     this.productSelected.emit(product);
+  }
+
+  onDetailClosed(): void {
+    this.showDetailModal.set(false);
+    this.selectedDetailProduct.set(null);
   }
 
   onDelete(id: number): void {
