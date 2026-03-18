@@ -1,8 +1,16 @@
 <nav class="navbar">
-    <span class="nav-brand">Com-Shop Boys</span>
-    <div class="nav-links">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Product Services</a>
+  <span class="nav-brand">Com-Shop Boys</span>
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Product Services</a>
+
+    <div class="dropdown">
+      <a class="dropdown-toggle" routerLink="/product" routerLinkActive="active">Products ▾</a>
+      <div class="dropdown-menu">
+        <a routerLink="/product-list" routerLinkActive="active">Product List</a>
+        <a routerLink="/product-details" routerLinkActive="active">Product Details</a>
+      </div>
     </div>
-  </nav>
-  
-  <router-outlet></router-outlet>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

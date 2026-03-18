@@ -14,10 +14,8 @@ import { ProductService } from '../services/product';
   styleUrls: ['./products.css']
 })
 export class ProductsComponent implements OnInit {
-
   selectedProduct: Product | null = null;
   showModal: boolean = false;
-
   searchId: number | null = null;
   selectedSearchProduct: Product | null = null;
   updateMessage: string = '';

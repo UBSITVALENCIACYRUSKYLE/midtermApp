@@ -10,7 +10,6 @@ import { Product } from '../../models/product.interface';
   styleUrls: ['./product-details.css']
 })
 export class ProductDetailsComponent {
-
   @Input() selectedProduct: Product | null = null;
   @Input() showModal: boolean = false;
   @Output() modalClosed = new EventEmitter<void>();

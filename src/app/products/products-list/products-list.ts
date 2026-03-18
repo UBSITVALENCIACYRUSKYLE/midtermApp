@@ -1,10 +1,7 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product.interface';
-import { Employee } from '../../models/employee';
-import { Employee as EmployeeService } from '../../services/employee';
 import { ProductService } from '../../services/product';
 
 @Component({
@@ -15,23 +12,31 @@ import { ProductService } from '../../services/product';
   styleUrls: ['./products-list.css']
 })
 export class ProductsListComponent implements OnInit {
+  private productService = inject(ProductService);
 
   @Output() productSelected = new EventEmitter<Product>();
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private employeeService: EmployeeService,
-    private productService: ProductService
-  ) {}
+  displayedProducts = signal<Product[]>([]);
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.displayedProducts.set(this.productService.getProducts());
+  }
 
-  get products(): Product[] {
-    return this.productService.getProducts();
+  onSearch(e: Event): void {
+    const q = (e.target as HTMLInputElement).value;
+    this.displayedProducts.set(
+      q.trim() ? this.productService.search(q) : this.productService.getProducts()
+    );
   }
 
   viewProductDetails(product: Product): void {
     this.productSelected.emit(product);
+  }
+
+  onDelete(id: number): void {
+    if (confirm('Delete this product?')) {
+      this.productService.delete(id);
+      this.displayedProducts.set(this.productService.getProducts());
+    }
   }
 }

@@ -1,33 +1,44 @@
 <div class="products-container">
-    <h2 class="page-title">Product Catalog</h2>
-    <p class="product-count">Showing {{ products.length }} products</p>
-  
-    <div class="table-wrapper">
-      <table class="products-table">
-        <thead>
+  <h2 class="page-title">Product Catalog</h2>
+
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search products..."
+    (input)="onSearch($event)"
+    style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #e2e8f0; border-radius:8px; font-size:0.9rem;"
+  />
+
+  <p class="product-count">Showing {{ displayedProducts().length }} products</p>
+
+  <div class="table-wrapper">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of displayedProducts(); track product.id) {
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Action</th>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+              <span class="status-badge status-{{ product.status.toLowerCase().replace(' ', '-') }}">
+                {{ product.status }}
+              </span>
+            </td>
+            <td style="display: flex; gap: 6px;">
+              <button class="btn-view" (click)="viewProductDetails(product)">View</button>
+              <button class="btn-view" style="background:#dc2626; border-color:#dc2626;"
+                (click)="onDelete(product.id)">Delete</button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          @for (product of products; track product.id) {
-            <tr>
-              <td>{{ product.id }}</td>
-              <td>{{ product.name }}</td>
-              <td>
-                <span class="status-badge status-{{ product.status.toLowerCase().replace(' ', '-') }}">
-                  {{ product.status }}
-                </span>
-              </td>
-              <td>
-                <button class="btn-view" (click)="viewProductDetails(product)">View</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+        }
+      </tbody>
+    </table>
   </div>
+</div>
